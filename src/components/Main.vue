@@ -1,13 +1,140 @@
 <template>
     <section class="flex-container">
-        <div class="check-list-img">jhggdsrfhoisruhgfd
-        </div>
-        <div class="flex-item"> giihyugsfihjbeirf
-        </div>
+       <!--<div class="check-list-img"></div>--> 
+        
+        <!--<form :class="logIn">-->
+        <form class="form" v-if=isLogIn >
+            <div class="email-container">
+                <label for="email">Enter your email:</label>
+                <input type="email" v-model="email.name">
+                {{ email.name }}
+                <label for="email">Enter your password:</label>
+                <input type="password" v-model="email.password1">
+                {{ email.password }}
+                <div id="container-btn">
+                    <button @click="validateEmail" type="button">Log in</button>
+                    <button @click="changeForm" type="button">Sign up</button>
+                </div>
+            </div>
+        </form>
+        <!--<form :class="signUp">-->
+        <form class="form" v-else>
+            <div class="email-container">
+                <label for="email">Enter your email:</label>
+                <input type="email" v-model="email.name">
+                <label for="email">Enter your password:</label>
+                <input type="password" v-model="email.password1">
+                <label for="email">Repeat your password:</label>
+                <input type="password" v-model="email.password2">
+                <div id="container-btn">
+                    <button @click="changeForm" type="button">Log in</button>
+                    <button @click="signUpf" type="button">Sign up</button>
+                </div>
+            </div>
+        </form>
     </section>
 </template>
 
 <script setup>
+    import { ref } from 'vue';
+    import { useUserStore } from '../store/user';
+
+    const userStore = useUserStore(); 
+    const logIn = ref("email-container"); 
+    const signUp = ref("hidden");
+    const isLogIn = ref(true);
+
+    function changeForm() {
+        isLogIn.value = !isLogIn.value;
+    };
+    
+
+    /*If we want to solve it with a function
+    function changeFormState() {
+        if (logIn.value == "email-container"){
+            logIn.value = "hidden";
+            signUp.value = "email-container";
+        }
+        else if(signUp.value == "email-container"){
+            logIn.value = "email-container";
+            signUp.value = "hidden";
+        }
+    };*/
+
+
+    const email = ref({
+        name: "",
+        password1: "",
+        password2: "",
+    });
+
+    function validateName(name) {
+        if (name.includes("@") && name.includes(".")){
+            alert("Valid email!");
+            console.log("ha entrado");
+            return(true);
+        } else {
+            alert("Not a valid email!")
+            return(false);
+        }
+    };
+
+    
+    function validatePassword(password) {
+        if (password.length >= 6){
+            alert("Valid Password!");
+            console.log("ha entrado");
+            return(true);
+        } else {
+            alert("Not a valid password!")
+            return(false);
+        }
+    };
+
+    function validatePasswordRepetition () {
+        if (email.value.password1 === email.value.password2){
+            alert("The password coincide");
+            return(true);
+        } else {
+            alert("The password do not match");
+            return(false);
+        }
+    };
+
+    function validateEmail () {
+        const val1 = validateName(email.value.name);
+        const val2 = validatePassword(email.value.password1);
+        if (val1 && val2) {
+            alert ("Pendiente de mirar si este usuario existe")
+        } else {
+            alert("Somethign went wrong, try again")
+        }
+    };
+
+    function signUpf() {
+        const validation = validateSignUp();
+        if (validation) {
+            userStore.signUp(email.value.name, email.value.password1);
+        }
+    };
+
+    function validateSignUp () {
+        const val1 = validateName(email.value.name);
+        const val2 = validatePassword(email.value.password1);
+        const val3 = validatePasswordRepetition();
+        if (val1 && val2 && val3){
+            alert("Add user to database");
+            return true;
+        }
+        else {
+            alert("Something went wrong, repeat your registration!")
+            return false;
+        }
+
+    };
+
+
+
 
 </script>
 
@@ -15,21 +142,42 @@
     .flex-container{
         display: flex;
         flex-direction: row;
-        height: 700px;
+        height: 500px;
         width: 100%;
         justify-content: center;
         margin-top: 100px;
     }
-
-    .flex-item{
+  
+    .form{
+        display: flex;
         width: 40%;
-        height: 100%;
+        background-color: rgba(45, 41, 68, 0.903);
+        justify-content: center;
+
     }
 
-    .check-list-img{
-        width: 40%;
-        background-image: url("../assets/hero-checklist.png");
-        background-size: contain;
-        background-repeat: no-repeat;
+    .email-container{
+        margin: 10% 15%;
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(45, 41, 68, 0.903);
+
     }
+
+    .email-items{
+        width: 90%;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    #container-btn {
+        display: flex;
+        width: 100%;
+        justify-content: space-around;
+    }
+
+
 </style>

@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <h1>yeyeyeye</h1>
+        <h1>IronHack Final Project</h1>
     </footer>
 </template>
 
