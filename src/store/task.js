@@ -13,7 +13,7 @@ export const useTaskStore = defineStore("tasks", {
         .from("tasks")
         .select("*")
         .order("id", { ascending: false });
-      this.tasks = tasks;
+      this.tasks = tasks; 
     },
     // Hacer POST
     // Hacer el PUT (edit)

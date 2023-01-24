@@ -1,33 +1,55 @@
 <template>
     <nav class="flex-container">
-        <div class="flex-item">
+        <div class="flex-item flex-img">
             <img class="logo-img" src="../assets/logo-1.png" alt="Logo image" />
         </div>
         <div class="flex-item">
             <h1 id="title">Vite Check</h1>
         </div>
+        <div class="flex-item">
+            <button @click="useUserSB.logOut" type="button">Log out</button>
+        </div>
     </nav>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { useUserStore } from '../store/user';
+
+const useUserSB = useUserStore();
+
 
 </script>
 
 <style scoped>
 .flex-container{
     width: 100%;
-    height: 100px;
+    height: 80px;
     display: flex;
-    margin: 2% 2%;
+    justify-content: space-between;
+    background-color: rgb(114, 114, 114);
+    align-items: center;
 }
 
 .flex-item{
-    width: 30%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.flex-img {
     height: 100%;
 }
 
-#title {
-    font-size: 4rem;
+button {
+    background-color: rgb(228, 215, 117);
+    color: black;
+    border: 1px solid rgb(228, 215, 117);
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+/*#title {
+    font-size: 3rem;
     font: lighter;
     color: #fff;
     font-style: italic;
@@ -45,7 +67,7 @@
 h1 {
     text-align: center;
     font-weight: 400;
-    font-size: 6.2rem;
+    font-size: 4rem;
     animation: pulsate 1.5s infinite alternate;  
     border: 0.2rem solid #fff;
     border-radius: 2rem;
@@ -56,7 +78,7 @@ h1 {
                 0 0 0.8rem #bc13fe,
                 0 0 2.8rem #bc13fe,
                 inset 0 0 1.3rem #bc13fe; 
-}
+} */
 .logo-img{
     height: 100%;
 }

@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 body {
+    margin: 0%;
+    width: 100%;
+    font-family: "Roboto", sans-serif;
+}
+header {
     background-color: rgba(2, 10, 17, 0.969);
     color: rgb(15, 12, 12);
     text-shadow:

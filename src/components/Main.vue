@@ -12,7 +12,7 @@
                 <input type="password" v-model="email.password1">
                 {{ email.password }}
                 <div id="container-btn">
-                    <button @click="validateEmail" type="button">Log in</button>
+                    <button @click="logInf" type="button">Log in</button>
                     <button @click="changeForm" type="button">Sign up</button>
                 </div>
             </div>
@@ -106,8 +106,10 @@
         const val2 = validatePassword(email.value.password1);
         if (val1 && val2) {
             alert ("Pendiente de mirar si este usuario existe")
+            return(true);
         } else {
             alert("Somethign went wrong, try again")
+            return(false);
         }
     };
 
@@ -115,6 +117,13 @@
         const validation = validateSignUp();
         if (validation) {
             userStore.signUp(email.value.name, email.value.password1);
+        }
+    };
+
+    function logInf() {
+        const validation = validateEmail();
+        if (validation) {
+            userStore.signIn(email.value.name, email.value.password1);
         }
     };
 
