@@ -44,6 +44,8 @@
     const signUp = ref("hidden");
     const isLogIn = ref(true);
 
+    
+
     function changeForm() {
         isLogIn.value = !isLogIn.value;
     };

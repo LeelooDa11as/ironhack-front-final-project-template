@@ -5,31 +5,31 @@
     <div class="add-task" v-if=isNewTask >
       <form class="container-input">
         <label for="title">Title:</label>
-        <input type="text" placeholder="Work"><br>
+        <input v-model="newPostDetails.title" type="text" placeholder="Work"><br>
         <label for="task">Task description</label>
-        <input type="text"><br>
+        <input v-model="newPostDetails.description" type="text"><br>
       </form>
       <div class="add-task-buttons">
         <label for="title">Priority</label>
-        <input type="number" placeholder="1,2 or 3" min="1" max="3">
-        <button class="add-task-btn" type="button">Add to the list</button>
+        <input v-model="newPostDetails.priority" type="number" placeholder="1,2 or 3" min="1" max="3">
+        <button class="add-task-btn" @click="addTask" type="button">Add to the list</button>
       </div>
     </div>
   </section>
-  <tyt v-for="task in tasks" :key="task.id">
+  <div v-for="task in useTaskStoreSB.tasks" :key="task.id">
     <div class="items flex-container">
       <div class="container-items" >
           <td >{{task.title}}</td>
           <td >{{task.description}}</td>
-          <td >{{task.priority}}</td>
+          <td >{{task.priority}} </td>
       </div>
       <div class="container-items">
           <button type="button">Done</button>
           <button type="button">Edit</button>
-          <button type="button">Delete</button>
+          <button @click="deleteTask(task)" type="button">Delete</button>
       </div>
     </div>
-  </tyt>
+  </div>
   <Footer/>
 
   
@@ -37,18 +37,30 @@
 
 <script setup>
   import {ref} from 'vue';
-  import {useTaskStore} from '../store/task';
+  import { useUserStore } from '../store/user';
+  import { useTaskStore } from '../store/task';
   import Header from '../components/Header.vue';
   import TaskItem from '../components/TaskItem.vue';
   import Footer from '../components/Footer.vue';
+  import { onMounted } from "vue";
+  const useTaskStoreSB = useTaskStore();
+  const userStoreSB = useUserStore(); 
+
+  onMounted(async () => {
+  try {
+    await userStoreSB.fetchUser();
+    await useTaskStoreSB.fetchTasks();
+  } catch (e) {
+    console.log(e);
+  }
+});
+  
   
 
-  const useTaskStoreSB = useTaskStore();
   const addNewTaskMsn = ref("Add task");
   const isNewTask = ref(false);
-  useTaskStoreSB.fetchTasks();
-  const tasks = useTaskStoreSB.tasks;
-  console.log(tasks);
+
+  console.log(useTaskStoreSB.tasks);
   /*ref([
   {"title": "Work", "description": "Work hard", "priority": 2},
   {"title": "Study", "description": "Work hard", "priority": 1},
@@ -62,6 +74,38 @@
     } else {
       addNewTaskMsn.value = "Add task";
     }
+  };
+
+  const newPostDetails = ref ({
+    user_id: "",
+    title: "",
+    description: "",
+    priority: 1
+  });
+
+  function validationNewTask() {
+    if (newPostDetails.value.title === "" || 
+    newPostDetails.value.description === "" || 
+    newPostDetails.value.user_id === ""){
+      return(false);
+    }
+    return(true);
+  };
+  function deleteTask(task){
+    console.log("lo estamos borrando");
+    useTaskStoreSB.delete(task.id);
+  }
+  
+  function addTask() {
+    newPostDetails.value.user_id = userStoreSB.user.id;
+    const val = validationNewTask();
+    if (val) {
+      console.log(newPostDetails.value);
+      useTaskStoreSB.post(newPostDetails.value);
+    } else {
+      alert("New task data is not completed");
+    }
+
   };
 
 
