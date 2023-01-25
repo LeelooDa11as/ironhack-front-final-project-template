@@ -12,10 +12,24 @@
       <div class="add-task-buttons">
         <label for="title">Priority</label>
         <input v-model="newPostDetails.priority" type="number" placeholder="1,2 or 3" min="1" max="3">
-        <button class="add-task-btn" @click="addTask" type="button">Add to the list</button>
+        <button class="add-task-btn" @click="addTask" type="button">Add</button>
       </div>
     </div>
   </section>
+  <div class="add-task" v-if=isTaskEdit>
+      <form class="container-input">
+        <label for="title">Title:</label>
+        <input v-model="newPostDetails.title" type="text" placeholder="Work"><br>
+        <label for="task">Task description</label>
+        <input v-model="newPostDetails.description" type="text"><br>
+      </form>
+      <div class="add-task-buttons">
+        <label for="title">Priority</label>
+        <input v-model="newPostDetails.priority" type="number" placeholder="1,2 or 3" min="1" max="3">
+        <button class="add-task-btn" @click="addTask" type="button">Save</button>
+        <button class="add-task-btn" @click="cancelEditTask" type="button">Cancel</button>
+      </div>
+    </div>
   <div v-for="task in useTaskStoreSB.tasks" :key="task.id">
     <div class="items flex-container">
       <div class="container-items" >
@@ -25,7 +39,7 @@
       </div>
       <div class="container-items">
           <button type="button">Done</button>
-          <button type="button">Edit</button>
+          <button @click="editTask(task)" type="button">Edit</button>
           <button @click="deleteTask(task)" type="button">Delete</button>
       </div>
     </div>
@@ -43,8 +57,18 @@
   import TaskItem from '../components/TaskItem.vue';
   import Footer from '../components/Footer.vue';
   import { onMounted } from "vue";
+
   const useTaskStoreSB = useTaskStore();
   const userStoreSB = useUserStore(); 
+  const addNewTaskMsn = ref("Add task");
+  const isNewTask = ref(false);
+  const isTaskEdit = ref(false);
+  const newPostDetails = ref ({
+    user_id: "",
+    title: "",
+    description: "",
+    priority: 1
+  });
 
   onMounted(async () => {
   try {
@@ -54,19 +78,13 @@
     console.log(e);
   }
 });
+
+  function clearTaskInputs() {
+    newPostDetails.value.title = "";
+    newPostDetails.value.description = "";
+    newPostDetails.value.priority = 1;
+  };
   
-  
-
-  const addNewTaskMsn = ref("Add task");
-  const isNewTask = ref(false);
-
-  console.log(useTaskStoreSB.tasks);
-  /*ref([
-  {"title": "Work", "description": "Work hard", "priority": 2},
-  {"title": "Study", "description": "Work hard", "priority": 1},
-  {"title": "Play", "description": "Work hard", "priority": 3},
-  ]);*/
-
   function switchIsNewTask() {
     isNewTask.value = !isNewTask.value;
     if(addNewTaskMsn.value == "Add task") {
@@ -76,13 +94,6 @@
     }
   };
 
-  const newPostDetails = ref ({
-    user_id: "",
-    title: "",
-    description: "",
-    priority: 1
-  });
-
   function validationNewTask() {
     if (newPostDetails.value.title === "" || 
     newPostDetails.value.description === "" || 
@@ -91,8 +102,9 @@
     }
     return(true);
   };
+
   function deleteTask(task){
-    console.log("lo estamos borrando");
+    //console.log("lo estamos borrando");
     useTaskStoreSB.delete(task.id);
   }
   
@@ -102,14 +114,23 @@
     if (val) {
       console.log(newPostDetails.value);
       useTaskStoreSB.post(newPostDetails.value);
+      switchIsNewTask();
+      clearTaskInputs();
     } else {
       alert("New task data is not completed");
     }
 
   };
 
-
+  function cancelEditTask() {
+    isTaskEdit.value = !isTaskEdit.value;
+  };
   
+  function editTask(task) {
+    isTaskEdit.value = !isTaskEdit.value;
+  };
+
+
   
 </script>
 

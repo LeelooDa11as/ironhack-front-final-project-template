@@ -23,6 +23,8 @@ export const useTaskStore = defineStore("tasks", {
     },
 
     // Hacer el PUT (edit)
+
+    
     // Hacer el delete
     async delete(taskid) {
       const { error } = await supabase.from('tasks').delete().eq('id', taskid);
