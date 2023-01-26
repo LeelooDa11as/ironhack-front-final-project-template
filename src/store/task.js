@@ -17,14 +17,22 @@ export const useTaskStore = defineStore("tasks", {
     },
     // Hacer POST
     async post(taskData) {
+      console.log(taskData)
       const { error } = await supabase.from('tasks').insert(taskData);
       if (error) throw error;
       this.fetchTasks();
     },
 
     // Hacer el PUT (edit)
+    async put(taskData, taskid) {
+      const { error } = await supabase
+        .from('tasks')
+        .update(taskData)
+        .eq('id', taskid);
+      if (error) throw error;
+      this.fetchTasks();
+    },
 
-    
     // Hacer el delete
     async delete(taskid) {
       const { error } = await supabase.from('tasks').delete().eq('id', taskid);
