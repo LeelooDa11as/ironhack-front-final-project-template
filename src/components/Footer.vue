@@ -11,8 +11,8 @@
 
 <style scoped>
 footer {
-    position: fixed;
-    bottom: 0;
+    /*position: fixed;
+    bottom: 0; */
     height: 70px;
     background-color: beige;
     width: 100%;

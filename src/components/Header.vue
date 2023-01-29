@@ -7,7 +7,7 @@
             <h1 id="title">Vite Check</h1>
         </div>
         <div class="flex-item">
-            <button @click="useUserSB.logOut" type="button">Log out</button>
+            <button class="log-out-btn" @click="useUserSB.logOut" type="button">Log out</button>
         </div>
     </nav>
 </template>
@@ -40,7 +40,7 @@ const useUserSB = useUserStore();
     height: 100%;
 }
 
-button {
+.log-out-btn {
     background-color: rgb(228, 215, 117);
     color: black;
     border: 1px solid rgb(228, 215, 117);

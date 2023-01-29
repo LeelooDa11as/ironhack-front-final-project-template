@@ -1,7 +1,8 @@
 <template>
-  <Header/>
+  <Header />
   <section>
-    <button class="add-button" @click="switchIsNewTask" type="button">{{ addNewTaskMsn }}</button>
+    <button :class="addCancelLogo" @click="switchIsNewTask" type="button">
+    </button>
     <div class="add-task" v-if=isNewTask >
       <form class="container-input">
         <label for="title">Title:</label>
@@ -17,30 +18,35 @@
     </div>
   </section>
   <div class="add-task" v-if=isTaskEdit>
-      <form class="container-input">
-        <label for="title">Title:</label>
-        <input v-model="editTask.title" type="text" placeholder="Work"><br>
-        <label for="task">Task description</label>
-        <textarea cols="5" rows="5" v-model="editTask.description" type="text"></textarea><br>
-      </form>
-      <div class="add-task-buttons">
-        <label for="title">Priority</label>
-        <input v-model="editTask.priority" type="number" min="1" max="3">
-        <button class="add-task-btn" @click="saveF" type="button">Save</button>
-        <button class="add-task-btn" @click="switchEditTask" type="button">Cancel</button>
-      </div>
+    <form class="container-input">
+      <label for="title">Title:</label>
+      <input v-model="editTask.title" type="text" placeholder="Work"><br>
+      <label for="task">Task description</label>
+      <textarea cols="5" rows="5" v-model="editTask.description" type="text"></textarea><br>
+    </form>
+    <div class="add-task-buttons">
+      <label for="title">Priority</label>
+      <input v-model="editTask.priority" type="number" min="1" max="3">
+      <button class="add-task-btn" @click="saveF" type="button">Save</button>
+      <button class="add-task-btn" @click="switchEditTask" type="button">Cancel</button>
     </div>
+  </div>
   <div v-for="task in useTaskStoreSB.tasks" :key="task.id">
-    <div class="items flex-container" :class="priorityState[task.priority]">
+    <div class="items flex-container" :class="[task.is_complete ? taskDone: priorityState[task.priority]]">
       <div class="container-items" >
-          <td >{{task.title}}</td>
-          <td >{{task.description}}</td>
-          <td >{{task.priority}} </td>
+        <td >{{task.title}}</td>
+        <td >{{task.description}}</td>
       </div>
       <div class="container-items">
-          <button type="button">Done</button>
-          <button @click="editTaskf(task)" type="button">Edit</button>
-          <button @click="deleteTask(task)" type="button">Delete</button>
+        <button class="task-button" @click="editIsCompleteF(task)" type="button">
+          <img class="button-logo" src="../assets/check-icon.png" alt="completed-logo"/>
+        </button>
+        <button class="task-button" @click="editTaskf(task)" type="button">
+          <img class="button-logo" src="../assets/edit-icon.png" alt="completed-logo"/>
+        </button>
+        <button class="task-button" @click="deleteTask(task)" type="button">
+          <img class="button-logo" src="../assets/delete-icon.png" alt="completed-logo"/>
+        </button>
       </div>
     </div>
   </div>
@@ -60,11 +66,12 @@
 
   const useTaskStoreSB = useTaskStore();
   const userStoreSB = useUserStore(); 
-  const addNewTaskMsn = ref("Add task");
+  const addCancelLogo = ref("add-btn-icon");
   const isNewTask = ref(false);
   const isTaskEdit = ref(false);
   const currentTask = ref(null);
-  const newPostDetails = ref ({
+  const taskDone = ref ("task-done");
+  const newPostDetails = ref ({ 
     user_id: "",
     title: "",
     description: "",
@@ -82,7 +89,6 @@
     1: "urgent-priority",
     2: "moderate-priority",
     3: "not-urgent-priority"
-
   });
 
   onMounted(async () => {
@@ -102,11 +108,10 @@
   
   function switchIsNewTask() {
     isNewTask.value = !isNewTask.value;
-    if(addNewTaskMsn.value == "Add task") {
-      addNewTaskMsn.value = "Close task";
+    if(isNewTask.value) {
+      addCancelLogo.value = "close-btn-icon ";
     } else {
-      addNewTaskMsn.value = "Add task";
-      clearTaskInputs();
+      addCancelLogo.value = "add-btn-icon";
     }
   };
 
@@ -124,12 +129,12 @@
     useTaskStoreSB.delete(task.id);
   }
   
-  function addTask() {
+  async function addTask() {
     newPostDetails.value.user_id = userStoreSB.user.id;
     const val = validationNewTask();
     if (val) {
       console.log(newPostDetails.value);
-      useTaskStoreSB.post(newPostDetails.value);
+      await useTaskStoreSB.post(newPostDetails.value);
       switchIsNewTask();
       clearTaskInputs();
     } else {
@@ -151,6 +156,12 @@
     switchEditTask();
   };
 
+  function editIsCompleteF (task) {
+    const isItComplete = task.is_complete;
+    useTaskStoreSB.taskIsComplete(task.id, !isItComplete);
+
+  };
+
  function saveF(){
     useTaskStoreSB.put(editTask.value, editTask.value.id);
     switchEditTask();
@@ -159,13 +170,30 @@
 </script>
 
 <style scoped>
-  .add-button {
+.log-out-btn {
+  display: none;
+}
+  .add-btn-icon {
+    
     position: fixed;
     top: 120px;
-    right: 50px;
-    padding: 10px 10px;
-    border-radius: 2px;
-    background-color: grey;
+    right: 60px;
+    height: 50px;
+    width: 50px;
+    background: url(../assets/add-icon.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .close-btn-icon {
+    position: fixed;
+    top: 120px;
+    right: 60px;
+    height: 50px;
+    width: 50px;
+    background: url(../assets/cancel-logo.png);
+    background-size: contain;
+    background-repeat: no-repeat;
   }
 
   .add-task {
@@ -208,7 +236,17 @@
   .items {
     margin: 5px;
     border: 1px solid black;
-    width: 80%;
+    width: 70%;
+    height: 100px;
+  }
+
+  .task-button {
+    height: 30%;
+  }
+
+  .button-logo {
+    height: 100%;
+
   }
 
   .urgent-priority {
@@ -222,6 +260,10 @@
 
   .not-urgent-priority{
     background-color: rgb(146, 146, 210);
+  }
+
+  .task-done {
+    background-color: rgb(143, 201, 143);
   }
 
 

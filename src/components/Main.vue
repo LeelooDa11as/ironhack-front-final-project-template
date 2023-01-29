@@ -51,19 +51,6 @@
     };
     
 
-    /*If we want to solve it with a function
-    function changeFormState() {
-        if (logIn.value == "email-container"){
-            logIn.value = "hidden";
-            signUp.value = "email-container";
-        }
-        else if(signUp.value == "email-container"){
-            logIn.value = "email-container";
-            signUp.value = "hidden";
-        }
-    };*/
-
-
     const email = ref({
         name: "",
         password1: "",
@@ -72,8 +59,6 @@
 
     function validateName(name) {
         if (name.includes("@") && name.includes(".")){
-            alert("Valid email!");
-            console.log("ha entrado");
             return(true);
         } else {
             alert("Not a valid email!")
@@ -84,18 +69,15 @@
     
     function validatePassword(password) {
         if (password.length >= 6){
-            alert("Valid Password!");
-            console.log("ha entrado");
             return(true);
         } else {
-            alert("Not a valid password!")
+            alert("The password is too short!")
             return(false);
         }
     };
 
     function validatePasswordRepetition () {
         if (email.value.password1 === email.value.password2){
-            alert("The password coincide");
             return(true);
         } else {
             alert("The password do not match");
@@ -107,7 +89,6 @@
         const val1 = validateName(email.value.name);
         const val2 = validatePassword(email.value.password1);
         if (val1 && val2) {
-            alert ("Pendiente de mirar si este usuario existe")
             return(true);
         } else {
             alert("Somethign went wrong, try again")
@@ -134,7 +115,6 @@
         const val2 = validatePassword(email.value.password1);
         const val3 = validatePasswordRepetition();
         if (val1 && val2 && val3){
-            alert("Add user to database");
             return true;
         }
         else {
