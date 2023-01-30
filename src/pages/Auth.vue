@@ -1,5 +1,5 @@
   <template>
-    <Header />
+    <Header :show-log-out="false" />
     <Main />
     <Footer />
 

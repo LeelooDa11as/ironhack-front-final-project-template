@@ -6,7 +6,7 @@
         <div class="flex-item">
             <h1 id="title">Vite Check</h1>
         </div>
-        <div class="flex-item">
+        <div v-if=showLogOut class="flex-item">
             <button class="log-out-btn" @click="useUserSB.logOut" type="button">Log out</button>
         </div>
     </nav>
@@ -17,14 +17,16 @@ import { ref } from 'vue';
 import { useUserStore } from '../store/user';
 
 const useUserSB = useUserStore();
-
+defineProps ({
+    showLogOut: Boolean
+})
 
 </script>
 
 <style scoped>
 .flex-container{
     width: 100%;
-    height: 80px;
+    height: 10vh;
     display: flex;
     justify-content: space-between;
     background-color: rgb(114, 114, 114);

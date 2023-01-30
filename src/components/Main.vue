@@ -7,10 +7,8 @@
             <div class="email-container">
                 <label for="email">Enter your email:</label>
                 <input type="email" v-model="email.name">
-                {{ email.name }}
                 <label for="email">Enter your password:</label>
                 <input type="password" v-model="email.password1">
-                {{ email.password }}
                 <div id="container-btn">
                     <button @click="logInf" type="button">Log in</button>
                     <button @click="changeForm" type="button">Sign up</button>
@@ -130,6 +128,12 @@
 </script>
 
 <style scoped>
+section {
+    color: aliceblue;
+}
+input {
+    color: black;
+}
     .flex-container{
         display: flex;
         flex-direction: row;

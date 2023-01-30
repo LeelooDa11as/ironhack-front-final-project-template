@@ -13,7 +13,7 @@
 footer {
     /*position: fixed;
     bottom: 0; */
-    height: 70px;
+    height: 10vh;
     background-color: beige;
     width: 100%;
 }
