@@ -106,29 +106,34 @@
 
 
   input, textarea {
-    background-color:bisque;
+    background-color:#D0D1D3;
   }
 
 	.add-task {
     display: flex;
     position: fixed;
+    height: 400px;
+    width: 600px;
+    background-color:  #f3f4f7;
     top: 120px;
-    left: 40%;
-    border: 2px solid black;
-    border-radius: 2px;
-    padding: 50px;
+    left: 30%;
+    border: 2px solid rgb(137, 137, 137);
+    border-radius: 10px;
   }
 
 	.add-task-buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    margin: 5%;
+    width: 20%;
+    margin: 5% 5%;
   }
 
 	.container-input {
     display: flex;
     flex-direction: column;
+    width: 60%;
+    margin: 5% 5%;
   }
 
 

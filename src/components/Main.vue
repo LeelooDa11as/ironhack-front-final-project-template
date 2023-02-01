@@ -1,28 +1,28 @@
 <template>
     <section class="flex-container">
-       <!--<div class="check-list-img"></div>--> 
-        
-        <!--<form :class="logIn">-->
         <form class="form" v-if=isLogIn >
             <div class="email-container">
-                <label for="email">Enter your email:</label>
+                <div class="hero-image-log-container">
+                </div>
+                <label class="email-font" for="email">Enter your email:</label>
                 <input type="email" v-model="email.name">
-                <label for="email">Enter your password:</label>
+                <label class="email-font" for="email">Enter your password:</label>
                 <input type="password" v-model="email.password1">
                 <div id="container-btn">
-                    <button @click="logInf" type="button">Log in</button>
+                    <button class="active-btn" @click="logInf" type="button">Log in</button>
                     <button @click="changeForm" type="button">Sign up</button>
                 </div>
             </div>
         </form>
-        <!--<form :class="signUp">-->
         <form class="form" v-else>
             <div class="email-container">
-                <label for="email">Enter your email:</label>
+                <div class="hero-img-sign-container">
+                </div>
+                <label class="email-font" for="email">Enter your email:</label>
                 <input type="email" v-model="email.name">
-                <label for="email">Enter your password:</label>
+                <label class="email-font" for="email">Enter your password:</label>
                 <input type="password" v-model="email.password1">
-                <label for="email">Repeat your password:</label>
+                <label class="email-font" for="email">Repeat your password:</label>
                 <input type="password" v-model="email.password2">
                 <div id="container-btn">
                     <button @click="changeForm" type="button">Log in</button>
@@ -128,40 +128,58 @@
 </script>
 
 <style scoped>
-section {
-    color: aliceblue;
-}
+
+
 input {
+    background-color: #D0D1D3;
     color: black;
+    margin: 1% 0%;
+    padding: 5px;
+    border: 2px solid #444B5B;
+    border-radius: 10px;
 }
     .flex-container{
         display: flex;
         flex-direction: row;
-        height: 500px;
+        height: 550px;
         width: 100%;
         justify-content: center;
-        margin-top: 100px;
     }
   
     .form{
         display: flex;
         width: 40%;
-        background-color: rgba(45, 41, 68, 0.903);
+        background-color:  #f3f4f7;
+        border: 2px solid rgb(137, 137, 137);
         justify-content: center;
+        border-radius: 10px;
 
     }
 
     .email-container{
-        margin: 10% 15%;
+        margin: 5% 5%;
         width: 70%;
         display: flex;
         flex-direction: column;
-        background-color: rgba(45, 41, 68, 0.903);
 
     }
 
-    .email-items{
-        width: 90%;
+    .hero-image-log-container {
+        width: 100%;
+        height: 250px;
+        background-image: url(../assets/stationary.jpg);
+        background-size: cover;
+    }
+
+    .hero-img-sign-container {
+        width: 100%;
+        height: 200px;
+        background-image: url(../assets/messy-hero.jpg);
+        background-size: cover;
+    }
+
+    .email-font {
+        font-size: larger;
     }
 
     .hidden {
@@ -173,6 +191,39 @@ input {
         width: 100%;
         justify-content: space-around;
     }
+
+    button {
+        padding: 15px 40px;
+        background-color: #93B8B5;
+        border-radius: 5px;
+        color: black;
+        margin-top: 5%;
+    }
+
+    .active-btn {
+        padding: 15px 40px;
+        background-color: #a73b3be2;
+        border-radius: 5px;
+        margin-top: 5%;
+        color: black;
+    }
+
+    #hero-text {
+        text-align: center;
+
+    }
+
+    h1 {
+    font-size: 3rem;
+    font: lighter;
+    color: #fff;
+    text-shadow:
+        0 0 7px rgb(198, 79, 79),
+        0 0 10px #A43A3A,
+        0 0 21px #DFAF67,
+        0 0 42px #DFAF67
+       
+}
 
 
 </style>

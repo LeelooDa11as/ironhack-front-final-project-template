@@ -1,6 +1,9 @@
   <template>
     <Header :show-log-out="false" />
-    <Main />
+    <div class="fill-page">
+       <Main />
+    </div>
+   
     <Footer />
 
   </template>
@@ -11,7 +14,8 @@
     import Footer from '../components/Footer.vue';
   </script>
   
-  <style>
-
-
+  <style scoped>
+    .fill-page {
+    min-height: 78vh;
+  }
   </style>

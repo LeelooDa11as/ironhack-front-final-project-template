@@ -94,8 +94,9 @@ function saveF(){
   .flex-container{
         display: flex;
         justify-content: space-between;
-    }
-
+        background-color: #f3f4f7;
+        text-align: center;
+  }
   .container-items {
       display: flex;
       flex-direction: column;
@@ -105,7 +106,7 @@ function saveF(){
   .items {
     margin: 5px;
     border: 1px solid black;
-    width: 70%;
+    width: 50%;
     height: 100px;
     border-radius: 10px;
     margin: 10px;
@@ -123,20 +124,20 @@ function saveF(){
 
   
   .urgent-priority {
-    background-color: rgb(213, 137, 137);
+    border: 5px solid #d15b59b1;
 
   }
   .moderate-priority{
-    background-color: rgba(242, 136, 71, 0.859);
+    border: 5px solid rgba(242, 136, 71, 0.859);
 
   }
 
   .not-urgent-priority{
-    background-color: rgb(146, 146, 210);
+    border: 5px solid rgb(146, 146, 210);
   }
 
   .task-done {
-    background-color: rgb(143, 201, 143);
+    border: 5px solid rgb(143, 201, 143);
   }
 
   .add-task {
