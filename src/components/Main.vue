@@ -208,22 +208,4 @@ input {
         color: black;
     }
 
-    #hero-text {
-        text-align: center;
-
-    }
-
-    h1 {
-    font-size: 3rem;
-    font: lighter;
-    color: #fff;
-    text-shadow:
-        0 0 7px rgb(198, 79, 79),
-        0 0 10px #A43A3A,
-        0 0 21px #DFAF67,
-        0 0 42px #DFAF67
-       
-}
-
-
 </style>

@@ -14,7 +14,7 @@
         </div>
     </div>
     <div v-for="task in useTaskStoreSB.tasks" :key="task.id">
-        <div class="items flex-container" :class="[task.is_complete ? taskDone: priorityState[task.priority]]">
+        <div v-if="priority==task.priority" class="items flex-container" :class="[task.is_complete ? taskDone: priorityState[task.priority]]">
             <div class="container-items" >
                 <td >{{task.title}}</td>
                 <td >{{task.description}}</td>
@@ -38,6 +38,10 @@
 import { ref } from 'vue';
 import { useTaskStore } from '../store/task';
 
+defineProps({
+  priority: Number
+})
+
 const useTaskStoreSB = useTaskStore();
 const isTaskEdit = ref(false);
 const taskDone = ref ("task-done");
@@ -54,8 +58,7 @@ const editTask = ref ({
     3: "not-urgent-priority"
   });
 
-defineProps({
-});
+
 function deleteTask(task){
     //console.log("lo estamos borrando");
     useTaskStoreSB.delete(task.id);
@@ -91,6 +94,9 @@ function saveF(){
 </script>
 
 <style scoped>
+template{
+  width: 100%;
+}
   .flex-container{
         display: flex;
         justify-content: space-between;
@@ -106,7 +112,7 @@ function saveF(){
   .items {
     margin: 5px;
     border: 1px solid black;
-    width: 50%;
+    width: 100%;
     height: 100px;
     border-radius: 10px;
     margin: 10px;
@@ -143,21 +149,31 @@ function saveF(){
   .add-task {
     display: flex;
     position: fixed;
+    height: 400px;
+    width: 600px;
+    background-color:  #f3f4f7;
     top: 120px;
-    left: 40%;
-    border: 2px solid black;
-    border-radius: 2px;
-    padding: 50px;
+    left: 30%;
+    border: 2px solid rgb(137, 137, 137);
+    border-radius: 10px;
   }
 
-  .container-input {
-    display: flex;
-    flex-direction: column;
-  }
   .add-task-buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    margin: 5%;
+    width: 20%;
+    margin: 5% 5%;
+  }
+
+	.container-input {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 5% 5%;
+  }
+
+  input, textarea {
+    background-color:#D0D1D3;
   }
 </style>

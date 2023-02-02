@@ -2,7 +2,11 @@
   <Header :show-log-out="true" />
   <div class="fill-page">
     <AddNewTask />
-    <TaskItems />
+    <section class="flex-cont">
+      <div class="item"><TaskItems :priority="1"/></div>
+      <div class="item"><TaskItems :priority="2"/></div>
+      <div class="item"><TaskItems :priority="3"/></div>
+    </section>
   </div>  
   <Footer/>
 
@@ -40,14 +44,28 @@
 </script>
 
 <style scoped>
+template{
+  width: 100%;
+}
   .fill-page {
     min-height: 78vh;
+    width: 100%;
   }
-
+  
+  .flex-cont{
+    width: 100%;
+    display: flex;
+  }
 
   input, textarea {
     background-color:bisque;
   }
+
+  .item{
+    width: 25%;
+    margin: 0 1%;
+  }
+  
 
 
 </style>

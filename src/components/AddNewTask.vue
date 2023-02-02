@@ -4,13 +4,13 @@
     </button>
     <div class="add-task" v-if=isNewTask >
       <form class="container-input">
-        <label for="title">Title:</label>
+        <label  class="label-typography" for="title">Title:</label>
         <input v-model="newPostDetails.title" type="text" placeholder="Work"><br>
-        <label for="task">Task description</label>
+        <label class="label-typography" for="task">Task description</label>
         <textarea rows="5" v-model="newPostDetails.description" type="text"></textarea><br>
       </form>
       <div class="add-task-buttons">
-        <label for="title">Priority</label>
+        <label class="label-typography" for="title">Priority</label>
         <input v-model="newPostDetails.priority" type="number" placeholder="1,2 or 3" min="1" max="3">
         <button class="add-task-btn" @click="addTask" type="button">Add</button>
       </div>
@@ -134,6 +134,12 @@
     flex-direction: column;
     width: 60%;
     margin: 5% 5%;
+  }
+
+  .label-typography {
+    font-size: larger;
+    
+
   }
 
 
