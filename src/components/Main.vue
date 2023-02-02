@@ -26,7 +26,7 @@
                 <input type="password" v-model="email.password2">
                 <div id="container-btn">
                     <button @click="changeForm" type="button">Log in</button>
-                    <button @click="signUpf" type="button">Sign up</button>
+                    <button class="active-btn" @click="signUpf" type="button">Sign up</button>
                 </div>
             </div>
         </form>

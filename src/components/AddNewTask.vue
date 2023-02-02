@@ -5,13 +5,16 @@
     <div class="add-task" v-if=isNewTask >
       <form class="container-input">
         <label  class="label-typography" for="title">Title:</label>
-        <input v-model="newPostDetails.title" type="text" placeholder="Work"><br>
-        <label class="label-typography" for="task">Task description</label>
-        <textarea rows="5" v-model="newPostDetails.description" type="text"></textarea><br>
+        <input v-model="newPostDetails.title" type="text"><br>
+        <label class="label-typography" for="task">Task description:</label>
+        <textarea rows="6" v-model="newPostDetails.description" type="text"></textarea><br>
       </form>
       <div class="add-task-buttons">
-        <label class="label-typography" for="title">Priority</label>
-        <input v-model="newPostDetails.priority" type="number" placeholder="1,2 or 3" min="1" max="3">
+        <div class="priority-section">
+          <label class="label-typography" for="title">Priority:</label>
+          <input v-model="newPostDetails.priority" type="number" placeholder="1,2 or 3" min="1" max="3">
+        </div>
+        
         <button class="add-task-btn" @click="addTask" type="button">Add</button>
       </div>
     </div>
@@ -111,12 +114,12 @@
 
 	.add-task {
     display: flex;
-    position: fixed;
-    height: 400px;
-    width: 600px;
-    background-color:  #f3f4f7;
+    position: fixed; 
     top: 120px;
     left: 30%;
+    height: 350px;
+    width: 600px;
+    background-color:  #f3f4f7;
     border: 2px solid rgb(137, 137, 137);
     border-radius: 10px;
   }
@@ -124,9 +127,21 @@
 	.add-task-buttons {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     width: 20%;
     margin: 5% 5%;
+  }
+
+  .priority-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 150px;
+  }
+
+  .add-task-btn {
+    border: 2px solid #93B8B5;
+    background-color: #93B8B5;
+    padding: 10px 15px;
+    border-radius: 5px;
   }
 
 	.container-input {
@@ -138,10 +153,5 @@
 
   .label-typography {
     font-size: larger;
-    
-
   }
-
-
-
 </style>

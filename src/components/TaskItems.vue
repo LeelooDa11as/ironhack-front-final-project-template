@@ -1,22 +1,24 @@
 <template>
-    <div class="add-task" v-if=isTaskEdit>
+    <div class="edit-task" v-if=isTaskEdit>
         <form class="container-input">
-            <label for="title">Title:</label>
-            <input v-model="editTask.title" type="text" placeholder="Work"><br>
-            <label for="task">Task description</label>
-            <textarea cols="5" rows="5" v-model="editTask.description" type="text"></textarea><br>
+            <label class="label-typography" for="title">Title:</label>
+            <input v-model="editTask.title" type="text"><br>
+            <label class="label-typography" for="task">Task description:</label>
+            <textarea rows="6" v-model="editTask.description" type="text"></textarea><br>
         </form>
         <div class="add-task-buttons">
-            <label for="title">Priority</label>
+          <div class="priority-section">
+            <label class="label-typography" for="title">Priority:</label>
             <input v-model="editTask.priority" type="number" min="1" max="3">
+          </div>
             <button class="add-task-btn" @click="saveF" type="button">Save</button>
-            <button class="add-task-btn" @click="switchEditTask" type="button">Cancel</button>
+            <button class="cancel-task-btn" @click="switchEditTask" type="button">Cancel</button>
         </div>
     </div>
     <div v-for="task in useTaskStoreSB.tasks" :key="task.id">
         <div v-if="priority==task.priority" class="items flex-container" :class="[task.is_complete ? taskDone: priorityState[task.priority]]">
             <div class="container-items" >
-                <td >{{task.title}}</td>
+                <td id="task-title">{{task.title}}</td>
                 <td >{{task.description}}</td>
             </div>
             <div class="container-items">
@@ -60,7 +62,6 @@ const editTask = ref ({
 
 
 function deleteTask(task){
-    //console.log("lo estamos borrando");
     useTaskStoreSB.delete(task.id);
 };
 
@@ -146,14 +147,14 @@ template{
     border: 5px solid rgb(143, 201, 143);
   }
 
-  .add-task {
+  .edit-task {
     display: flex;
-    position: fixed;
-    height: 400px;
-    width: 600px;
-    background-color:  #f3f4f7;
+    position: fixed; 
     top: 120px;
     left: 30%;
+    height: 350px;
+    width: 600px;
+    background-color:  #f3f4f7;
     border: 2px solid rgb(137, 137, 137);
     border-radius: 10px;
   }
@@ -161,7 +162,6 @@ template{
   .add-task-buttons {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     width: 20%;
     margin: 5% 5%;
   }
@@ -175,5 +175,39 @@ template{
 
   input, textarea {
     background-color:#D0D1D3;
+  }
+
+  .label-typography {
+    font-size: larger;
+  }
+
+  .add-task-btn {
+    border: 2px solid #93B8B5;
+    background-color: #93B8B5;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+
+  .cancel-task-btn {
+    border: 2px solid #a73b3be2;
+    background-color: #a73b3be2;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-top: 50px;
+  }
+
+  .priority-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+  }
+
+  #task-title {
+    font-weight: bold;
+    text-align: left;
+  }
+
+  #task-description {
+    text-align: left;
   }
 </style>
